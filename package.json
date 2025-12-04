@@ -1,0 +1,11 @@
+{
+  "name": "contact-manager-fullstack",
+  "version": "1.0.0",
+  "description": "Full-stack Contact Manager",
+  "scripts": {
+    "vercel-build": "cd frontend && npm install && npm run build"
+  },
+  "engines": {
+    "node": ">=18.x"
+  }
+}
