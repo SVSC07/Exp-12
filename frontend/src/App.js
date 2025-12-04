@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
 
+// Configure API base URL from environment variable
+const API_BASE_URL = process.env.REACT_APP_API_URL || '/api';
+
 function App() {
   const [contacts, setContacts] = useState([]);
   const [formData, setFormData] = useState({ 
@@ -23,7 +26,7 @@ function App() {
   const fetchContacts = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('/api/contacts');
+      const response = await axios.get(`${API_BASE_URL}/contacts`);
       setContacts(response.data);
     } catch (error) {
       setMessage('Error fetching contacts');
@@ -50,11 +53,11 @@ function App() {
 
     try {
       if (editingId) {
-        await axios.put(`/api/contacts/${editingId}`, formData);
+        await axios.put(`${API_BASE_URL}/contacts/${editingId}`, formData);
         setMessage('Contact updated successfully!');
         setEditingId(null);
       } else {
-        await axios.post('/api/contacts', formData);
+        await axios.post(`${API_BASE_URL}/contacts`, formData);
         setMessage('Contact added successfully!');
       }
       
@@ -82,7 +85,7 @@ function App() {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this contact?')) {
       try {
-        await axios.delete(`/api/contacts/${id}`);
+        await axios.delete(`${API_BASE_URL}/contacts/${id}`);
         setMessage('Contact deleted successfully!');
         fetchContacts();
         setTimeout(() => setMessage(''), 3000);
